@@ -643,6 +643,9 @@ class nova(
   nova_config {
     'DEFAULT/image_service':                value => $image_service;
     'DEFAULT/auth_strategy':                value => $auth_strategy;
+
+    # Pete: still add memcached_servers to DEFAULT section else nova stuff goes belly up on start ()
+    'DEFAULT/memcached_servers':            value => join(any2array($memcached_servers), ',');
     'keystone_authtoken/memcached_servers': value => join(any2array($memcached_servers), ',');
     'DEFAULT/host':                         value => $host;
   }
