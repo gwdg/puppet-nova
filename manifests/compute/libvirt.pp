@@ -104,6 +104,16 @@
 #   you actually want to deploy.
 #   Defaults to true for backward compatibility.
 #
+# DEPRECATED
+#
+# [*remove_unused_kernels*]
+#   (optional) DEPRECATED. Should unused kernel images be removed?
+#   This is only safe to enable if all compute nodes
+#   have been updated to support this option.
+#   If undef is specified, remove the line in nova.conf
+#   otherwise, use a boolean to remove or not the kernels.
+#   Defaults to undef
+#
 class nova::compute::libvirt (
   $ensure_package                             = 'present',
   $libvirt_virt_type                          = 'kvm',
@@ -124,6 +134,8 @@ class nova::compute::libvirt (
   $virtlog_service_name                       = $::nova::params::virtlog_service_name,
   $compute_driver                             = 'libvirt.LibvirtDriver',
   $manage_libvirt_services                    = true,
+  # Deprecated
+  $remove_unused_kernels                      = undef,
 ) inherits nova::params {
 
   include ::nova::deps
@@ -154,6 +166,8 @@ class nova::compute::libvirt (
     if $vncserver_listen != '0.0.0.0' and $vncserver_listen != '::0' {
       fail('For migration support to work, you MUST set vncserver_listen to \'0.0.0.0\' or \'::0\'')
     } else {
+      # TODO(emilien): explode ::nova::migration::libvirt to select what bits we want to configure
+      # and allow micro services between libvirt & nova-compute.
       include ::nova::migration::libvirt
     }
   }
@@ -215,6 +229,10 @@ class nova::compute::libvirt (
     nova_config {
       'libvirt/disk_cachemodes': ensure => absent;
     }
+  }
+
+  if $remove_unused_kernels {
+    warning('remove_unused_kernels parameter is deprecated, has no effect and will be removed in a future release.')
   }
 
   if $remove_unused_resized_minimum_age_seconds != undef {
