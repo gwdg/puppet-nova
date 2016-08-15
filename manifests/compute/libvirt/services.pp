@@ -81,12 +81,12 @@ class nova::compute::libvirt::services (
     Service['libvirt'] -> Service<| title == 'nova-compute'|>
   }
 
-
   if $virtlock_service_name {
     service { 'virtlockd':
       ensure   => running,
       enable   => true,
-      name     => $virtlock_service_name,
+      # Fix: Prevent catalog error by commenting this out. Puppet bug?
+#      name     => $virtlock_service_name,
       provider => $::nova::params::special_service_provider,
       require  => Package['libvirt']
     }
@@ -96,7 +96,8 @@ class nova::compute::libvirt::services (
     service { 'virtlogd':
       ensure   => running,
       enable   => true,
-      name     => $virtlog_service_name,
+      # Fix: Prevent catalog error by commenting this out. Puppet bug?
+#      name     => $virtlog_service_name,
       provider => $::nova::params::special_service_provider,
       require  => Package['libvirt']
     }
