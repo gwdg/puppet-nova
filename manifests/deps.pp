@@ -52,7 +52,7 @@ class nova::deps {
   -> Nova_floating<||>
   Anchor['nova::dbsync::end']
   -> Anchor['nova::dbsync_api::end']
-  -> Nova_network<||>
+#  -> Nova_network<||>
 
   # all db settings should be applied and all packages should be installed
   # before dbsync starts
