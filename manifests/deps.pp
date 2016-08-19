@@ -52,7 +52,7 @@ class nova::deps {
   -> Nova_floating<||>
   Anchor['nova::dbsync::end']
   -> Anchor['nova::dbsync_api::end']
-  -> Nova_network<||>
+#  -> Nova_network<||>
 
   # Installation or config changes will always restart services.
   Anchor['nova::install::end'] ~> Anchor['nova::service::begin']
