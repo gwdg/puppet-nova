@@ -539,7 +539,7 @@ class nova(
   include ::nova::deps
 
   # maintain backward compatibility
-  include ::nova::db
+#  include ::nova::db
   include ::nova::logging
 
   validate_array($enabled_ssl_apis)
