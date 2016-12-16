@@ -137,6 +137,8 @@ describe 'nova::compute' do
 
       it { is_expected.to contain_nova_config('DEFAULT/resume_guests_state_on_host_boot').with_value(true) }
 
+      it { is_expected.to contain_nova_config('DEFAULT/resume_guests_state_on_host_boot').with_value(true) }
+
       it 'configures nova pci_passthrough_whitelist entries' do
         is_expected.to contain_nova_config('DEFAULT/pci_passthrough_whitelist').with(
           'value' => "[{\"vendor_id\":\"8086\",\"product_id\":\"0126\"},{\"vendor_id\":\"9096\",\"product_id\":\"1520\",\"physical_network\":\"physnet1\"}]"
