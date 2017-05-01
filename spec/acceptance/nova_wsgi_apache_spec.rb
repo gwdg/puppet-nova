@@ -68,7 +68,6 @@ describe 'basic nova' do
       class { '::nova::placement':
         password => 'a_big_secret',
       }
-      class { '::nova::cert': }
       class { '::nova::client': }
       class { '::nova::conductor': }
       class { '::nova::consoleauth': }
