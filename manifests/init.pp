@@ -645,7 +645,8 @@ class nova(
     'DEFAULT/auth_strategy':                value => $auth_strategy;
 
     # Pete: still add memcached_servers to DEFAULT section else nova stuff goes belly up on start ()
-    'DEFAULT/memcached_servers':            value => join(any2array($memcached_servers), ',');
+    # msrba: disable DEFAULT/memcached_server and use nova::cache ... otherwith mitaka does not work with newton controller and mc service groups
+    #'DEFAULT/memcached_servers':            value => join(any2array($memcached_servers), ',');
     'keystone_authtoken/memcached_servers': value => join(any2array($memcached_servers), ',');
     'DEFAULT/host':                         value => $host;
   }
